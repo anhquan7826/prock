@@ -1,20 +1,25 @@
-FLUTTER = flutter
-KVERSION = $(shell uname -r)
-OBJDIR = build
+MODULE_NAME 			:= mod_prock
 
-all: module app
+SRC 					+= src/prock.c
+SRC 					+= src/module.c
 
-module:
-	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD) O=$(OBJDIR) modules
+KDIR 					:= /lib/modules/$(shell uname -r)/build
+BUILD_DIR 				:= $(PWD)/build
+BUILD_DIR_MAKEFILE 		:= $(BUILD_DIR)/Makefile
 
-app:
-	cd app/; \
-	$(FLUTTER) build linux --release
+obj-m 					:= $(MODULE_NAME).o
+$(MODULE_NAME)-y	 	:= $(SRC:.c=.o)
 
-clean: module_clean app_clean
+EXTRA_CFLAGS := -I$(PWD)/include
 
-app_clean:
-	cd app/; $(FLUTTER) clean; rm -rf build/
+all: $(BUILD_DIR_MAKEFILE)
+	$(MAKE) -C $(KDIR) M=$(BUILD_DIR) src=$(PWD) modules
 
-module_clean:
-	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD) O=$(OBJDIR) clean
+clean:
+	$(MAKE) -C $(KDIR) M=$(BUILD_DIR) src=$(PWD) clean
+
+$(BUILD_DIR_MAKEFILE): $(BUILD_DIR)
+	touch "$@"
+
+$(BUILD_DIR):
+	mkdir -p "$@"
