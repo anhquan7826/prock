@@ -1,7 +1,7 @@
 MODULE_NAME 			:= mod_prock
 
 SRC 					+= src/prock.c
-SRC 					+= src/module.c
+SRC 					+= src/util.c
 
 KDIR 					:= /lib/modules/$(shell uname -r)/build
 BUILD_DIR 				:= $(PWD)/build
