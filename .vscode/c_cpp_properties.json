@@ -5,8 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/lib/modules/**",
-                "/usr/src/kernels/6.11.7-300.fc41.x86_64/include",
-                "/usr/src/kernels/6.11.7-300.fc41.x86_64/arch/x86/include"
+                "/usr/src/linux-headers-6.8.0-48-generic/include",
+                "/usr/src/linux-headers-6.8.0-48-generic/arch/x86/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
